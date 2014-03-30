@@ -1,11 +1,10 @@
 package psychicnova.matches;
 
 import cpw.mods.fml.common.registry.GameRegistry;
-import net.minecraft.block.Block;
 import net.minecraft.init.Blocks;
 import net.minecraft.init.Items;
+import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
-import net.minecraft.item.crafting.FurnaceRecipes;
 
 import cpw.mods.fml.common.Mod;
 import cpw.mods.fml.common.Mod.EventHandler;
@@ -15,8 +14,7 @@ import cpw.mods.fml.common.event.FMLPostInitializationEvent;
 import cpw.mods.fml.common.event.FMLPreInitializationEvent;
 
 @Mod(modid = MatchesMod.MODID, version = MatchesMod.VERSION)
-public class MatchesMod
-{
+public class MatchesMod {
     public static final String MODID = "matches";
     public static final String VERSION = "0.0.1";
 
@@ -24,12 +22,18 @@ public class MatchesMod
     @Mod.Instance(value = MatchesMod.MODID)
     public static MatchesMod instance;
 
+    public static Item matches;
+
+    public static Item enderSword;
+
     // Says where the client and server 'proxy' code is loaded.
     @SidedProxy(clientSide="psychicnova.matches.client.ClientProxy", serverSide="psychicnova.matches.CommonProxy")
     public static CommonProxy proxy;
 
     @EventHandler // used in 1.6.2
     public void preInit(FMLPreInitializationEvent event) {
+        enderSword = new EnderSwordItem();
+        GameRegistry.registerItem(enderSword, enderSword.getUnlocalizedName());
         System.out.println("preInit on the Matches mod!");
     }
 
@@ -60,7 +64,7 @@ public class MatchesMod
         GameRegistry.addRecipe(new ItemStack(Blocks.end_stone), "xyx", "ydy", "xyx",
                 'x', dirtStack, 'y', gravelStack, 'd', diamondsStack);
 
-        GameRegistry.addRecipe(new ItemStack(Items.diamond_sword), " e ", "beb", " r ",
+        GameRegistry.addRecipe(new ItemStack(enderSword), " e ", "beb", " r ",
                 'e', endStoneStack, 'b', boneStack, 'r', blazeRodStack);
 
         /*
