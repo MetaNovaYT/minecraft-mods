@@ -4,24 +4,18 @@ import cpw.mods.fml.relauncher.*;
 import net.minecraft.creativetab.CreativeTabs;
 import net.minecraft.item.*;
 
-
-public class EnderSwordItem extends ItemSword {
-    public EnderSwordItem() {
+public class InfinitySwordItem extends ItemSword {
+    public InfinitySwordItem() {
         super(ToolMaterial.EMERALD);
         setMaxStackSize(1);
         setCreativeTab(CreativeTabs.tabCombat);
-        setUnlocalizedName("enderSword");
-        setTextureName("matches:enderSword");
+        setUnlocalizedName("infinitySword");
+        setTextureName("matches:infinitySword");
     }
-
     @Override
     @SideOnly(Side.CLIENT)
     public boolean isFull3D()
     {
         return true;
-    }
-    public int getMaxItemUseDuration(ItemStack par1ItemStack)
-    {
-        return 500009;
     }
 }

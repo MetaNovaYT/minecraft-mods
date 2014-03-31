@@ -5,23 +5,18 @@ import net.minecraft.creativetab.CreativeTabs;
 import net.minecraft.item.*;
 
 
-public class EnderSwordItem extends ItemSword {
-    public EnderSwordItem() {
+public class SunSwordItem extends ItemSword {
+    public SunSwordItem() {
         super(ToolMaterial.EMERALD);
         setMaxStackSize(1);
         setCreativeTab(CreativeTabs.tabCombat);
-        setUnlocalizedName("enderSword");
-        setTextureName("matches:enderSword");
+        setUnlocalizedName("sunSword");
+        setTextureName("matches:sunSword");
     }
-
     @Override
     @SideOnly(Side.CLIENT)
     public boolean isFull3D()
     {
         return true;
-    }
-    public int getMaxItemUseDuration(ItemStack par1ItemStack)
-    {
-        return 500009;
     }
 }
