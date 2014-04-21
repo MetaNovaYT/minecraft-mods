@@ -1,7 +1,7 @@
 package psychicnova.matches;
 
 import cpw.mods.fml.relauncher.*;
-import net.minecraft.creativetab.CreativeTabs;
+import net.minecraft.creativetab.*;
 import net.minecraft.item.*;
 
 

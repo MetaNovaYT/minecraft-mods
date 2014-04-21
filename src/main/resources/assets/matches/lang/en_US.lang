@@ -1,5 +1,7 @@
 item.enderSword.name=Ender Sword
 item.sunSword.name=Sun Sword
 item.infinitySword.name=Infinity Sword
-tile.sunStone.name=Sun Stone
+tile.sunStone.name=SunStone
+tile.waspHive.name=Wasp Hive
 entity.wasp.name=Wasp
+entity.mnova.name=Mutant Nova
