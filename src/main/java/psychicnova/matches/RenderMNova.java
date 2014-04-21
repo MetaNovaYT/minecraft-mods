@@ -2,21 +2,21 @@ package psychicnova.matches;
 
 import net.minecraft.client.model.ModelBiped;
 import net.minecraft.client.renderer.entity.RenderBiped;
-import net.minecraft.client.renderer.entity.RenderLiving;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityLiving;
 import net.minecraft.util.ResourceLocation;
 
-public class RenderWasp extends RenderLiving {
+public class RenderMNova extends RenderBiped {
     private static final ResourceLocation textureLocation
-           = new ResourceLocation(MatchesMod.MODID + ":" + "textures/models/wasp.png");
+           = new ResourceLocation(MatchesMod.MODID + ":" + "textures/models/MNova.png");
 
-    public RenderWasp() {
-        super(new ModelWasp(), 0.5F);
+    public RenderMNova() {
+        super(new ModelBiped(), 0.5F);
     }
 
     @Override
-    protected ResourceLocation getEntityTexture(Entity wasp) {
+    protected ResourceLocation getEntityTexture(Entity MNova) {
         return textureLocation;
     }
 }
+

@@ -16,6 +16,7 @@ import cpw.mods.fml.common.event.FMLInitializationEvent;
 import cpw.mods.fml.common.event.FMLPostInitializationEvent;
 import cpw.mods.fml.common.event.FMLPreInitializationEvent;
 
+
 import java.util.Random;
 
 @Mod(modid = MatchesMod.MODID, version = MatchesMod.VERSION)
@@ -37,6 +38,17 @@ public class MatchesMod {
 
     public static Block sunStone;
 
+    public static Block waspHive;
+
+    public static int WASP_YELLOW = 0xEEF52C;
+
+    public static int WASP_GREEN = 0x54E33B;
+
+    public static int MNOVA_BLUE = 0x0515FA;
+
+    public static int MNOVA_RED = 0xFA051D;
+
+
     // Says where the client and server 'proxy' code is loaded.
     @SidedProxy(clientSide="psychicnova.matches.client.ClientProxy", serverSide="psychicnova.matches.CommonProxy")
     public static CommonProxy proxy;
@@ -47,11 +59,15 @@ public class MatchesMod {
         infinitySword = new InfinitySwordItem();
         sunSword = new SunSwordItem();
         sunStone = new SunStoneBlock();
+        waspHive = new WaspHiveBlock();
         GameRegistry.registerItem(enderSword, enderSword.getUnlocalizedName());
         GameRegistry.registerItem(infinitySword, infinitySword.getUnlocalizedName());
         GameRegistry.registerItem(sunSword, sunSword.getUnlocalizedName());
         GameRegistry.registerBlock(sunStone, sunStone.getUnlocalizedName());
-        registerEntity(WaspEntity.class, "wasp");
+        GameRegistry.registerBlock(waspHive, waspHive.getUnlocalizedName());
+        GameRegistry.registerTileEntity(WaspHiveTileEntity.class, "waspHive");
+        registerEntity(WaspEntity.class, "wasp", WASP_YELLOW, WASP_GREEN);
+        registerEntity(MNovaEntity.class, "mnova", MNOVA_BLUE, MNOVA_RED);
         proxy.registerRenderers();
         System.out.println("preInit on the Matches mod!");
     }
@@ -76,12 +92,6 @@ public class MatchesMod {
         ItemStack glowStoneStack = new ItemStack(Blocks.glowstone);
         ItemStack sunStoneStack = new ItemStack(MatchesMod.sunStone);
 
-        GameRegistry.addShapelessRecipe(diamondsStack, dirtStack);
-
-        GameRegistry.addShapelessRecipe(diamondsStack, dirtStack, dirtStack,
-                dirtStack, dirtStack, dirtStack, dirtStack, new ItemStack(
-                Blocks.sand), gravelStack, cobbleStack);
-
         GameRegistry.addRecipe(new ItemStack(Blocks.cobblestone), "xy", "yx",
                 'x', dirtStack, 'y', gravelStack);
 
@@ -97,13 +107,11 @@ public class MatchesMod {
         GameRegistry.addRecipe(new ItemStack(sunSword), " s ", "bsb", " g ",
                 's', sunStoneStack, 'b', diamondsStack, 'g', blazeRodStack);
 
-        /*
-        GameRegistry.addSmelting(Blocks.stone.blockID, new ItemStack(
+        /*GameRegistry.addSmelting(Blocks.stone.blockID, new ItemStack(
                 Blocks.stoneBrick), 0.1f);
 
         FurnaceRecipes.smelting().addSmelting(Blocks.wool.blockID, 15,
-                new ItemStack(Blocks.cloth, 1, 0), 0.1f);
-        */
+                new ItemStack(Blocks.wool, 1, 0), 0.1f);*/
     }
 
     @EventHandler // used in 1.6.2
@@ -116,15 +124,11 @@ public class MatchesMod {
         System.out.println("Welcome to the Matches mod!");
     }
 
-    public static void registerEntity(Class entityClass, String name) {
+    public static void registerEntity(Class entityClass, String name, int primaryColor, int secondaryColor) {
         int entityID = EntityRegistry.findGlobalUniqueEntityId();
-        long seed = name.hashCode();
-        Random rand = new Random(seed);
-        int primaryColor = rand.nextInt() * 16777215;
-        int secondaryColor = rand.nextInt() * 16777215;
-
         EntityRegistry.registerGlobalEntityID(entityClass, name, entityID);
         EntityRegistry.registerModEntity(entityClass, name, entityID, instance, 64, 1, true);
-        EntityList.entityEggs.put(Integer.valueOf(entityID), new EntityList.EntityEggInfo(entityID, primaryColor, secondaryColor));
+        EntityList.entityEggs.put(Integer.valueOf(entityID),
+                new EntityList.EntityEggInfo(entityID, primaryColor, secondaryColor));
     }
 }
