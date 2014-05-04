@@ -1,7 +1,12 @@
 item.enderSword.name=Ender Sword
-item.sunSword.name=Sun Sword
 item.infinitySword.name=Infinity Sword
+item.matches.name=Matches
+item.needle.name=Needle
+item.sunSword.name=Sun Sword
 tile.sunStone.name=SunStone
 tile.waspHive.name=Wasp Hive
-entity.wasp.name=Wasp
+entity.heroboss.name=Herobrine
 entity.mnova.name=Mutant Nova
+entity.wasp.name=Wasp
+itemGroup.MatchesMisc=Matches Miscellaneous
+itemGroup.MatchesSurgical=Matches Surgical

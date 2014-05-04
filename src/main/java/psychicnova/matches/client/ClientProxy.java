@@ -8,5 +8,6 @@ public class ClientProxy extends CommonProxy {
     public void registerRenderers() {
         RenderingRegistry.registerEntityRenderingHandler(WaspEntity.class, new RenderWasp());
         RenderingRegistry.registerEntityRenderingHandler(MNovaEntity.class, new RenderMNova());
+        //RenderingRegistry.registerEntityRenderingHandler(HeroBossEntity.class, new RenderHeroBoss());
     }
 }
