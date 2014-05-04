@@ -3,11 +3,13 @@ package psychicnova.matches;
 import cpw.mods.fml.common.registry.EntityRegistry;
 import cpw.mods.fml.common.registry.GameRegistry;
 import net.minecraft.block.Block;
+import net.minecraft.creativetab.CreativeTabs;
 import net.minecraft.entity.EntityList;
 import net.minecraft.init.Blocks;
 import net.minecraft.init.Items;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
+import psychicnova.matches.NeedleItem;
 
 import cpw.mods.fml.common.Mod;
 import cpw.mods.fml.common.Mod.EventHandler;
@@ -22,13 +24,15 @@ import java.util.Random;
 @Mod(modid = MatchesMod.MODID, version = MatchesMod.VERSION)
 public class MatchesMod {
     public static final String MODID = "matches";
-    public static final String VERSION = "0.0.1";
+    public static final String VERSION = "Pre-Alpha-0.0.2";
 
     // The instance of your mod that Forge uses.
     @Mod.Instance(value = MatchesMod.MODID)
     public static MatchesMod instance;
 
     public static Item matches;
+
+    public static Item needle;
 
     public static Item enderSword;
 
@@ -48,6 +52,23 @@ public class MatchesMod {
 
     public static int MNOVA_RED = 0xFA051D;
 
+    //public static int HB_RED = 0xFA051D;
+
+    //public static int HB_BLACK = 0x000000;
+
+
+
+    public static CreativeTabs tabMatchesSurgical = new CreativeTabs("MatchesSurgical") {
+        public Item getTabIconItem() {
+            return needle;
+        }
+    };
+
+    public static CreativeTabs tabMatchesMisc = new CreativeTabs("MatchesMisc") {
+        public Item getTabIconItem() {
+            return matches;
+        }
+    };
 
     // Says where the client and server 'proxy' code is loaded.
     @SidedProxy(clientSide="psychicnova.matches.client.ClientProxy", serverSide="psychicnova.matches.CommonProxy")
@@ -58,16 +79,22 @@ public class MatchesMod {
         enderSword = new EnderSwordItem();
         infinitySword = new InfinitySwordItem();
         sunSword = new SunSwordItem();
+        needle = new NeedleItem();
         sunStone = new SunStoneBlock();
         waspHive = new WaspHiveBlock();
+        matches = new MatchesItem();
         GameRegistry.registerItem(enderSword, enderSword.getUnlocalizedName());
         GameRegistry.registerItem(infinitySword, infinitySword.getUnlocalizedName());
         GameRegistry.registerItem(sunSword, sunSword.getUnlocalizedName());
+        GameRegistry.registerItem(needle, needle.getUnlocalizedName());
+        GameRegistry.registerItem(matches, matches.getUnlocalizedName());
         GameRegistry.registerBlock(sunStone, sunStone.getUnlocalizedName());
         GameRegistry.registerBlock(waspHive, waspHive.getUnlocalizedName());
         GameRegistry.registerTileEntity(WaspHiveTileEntity.class, "waspHive");
+        GameRegistry.registerFuelHandler(new MatchesFuelHandler());
         registerEntity(WaspEntity.class, "wasp", WASP_YELLOW, WASP_GREEN);
         registerEntity(MNovaEntity.class, "mnova", MNOVA_BLUE, MNOVA_RED);
+        //registerEntity(HeroBossEntity.class, "heroboss", HB_RED, HB_BLACK);
         proxy.registerRenderers();
         System.out.println("preInit on the Matches mod!");
     }
@@ -91,6 +118,7 @@ public class MatchesMod {
         ItemStack diamondBlockStack = new ItemStack(Blocks.diamond_block);
         ItemStack glowStoneStack = new ItemStack(Blocks.glowstone);
         ItemStack sunStoneStack = new ItemStack(MatchesMod.sunStone);
+        ItemStack NeedleItem = new ItemStack(MatchesMod.needle);
 
         GameRegistry.addRecipe(new ItemStack(Blocks.cobblestone), "xy", "yx",
                 'x', dirtStack, 'y', gravelStack);
