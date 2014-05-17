@@ -9,8 +9,6 @@ import net.minecraft.init.Blocks;
 import net.minecraft.init.Items;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
-import psychicnova.matches.NeedleItem;
-
 import cpw.mods.fml.common.Mod;
 import cpw.mods.fml.common.Mod.EventHandler;
 import cpw.mods.fml.common.SidedProxy;
@@ -18,13 +16,10 @@ import cpw.mods.fml.common.event.FMLInitializationEvent;
 import cpw.mods.fml.common.event.FMLPostInitializationEvent;
 import cpw.mods.fml.common.event.FMLPreInitializationEvent;
 
-
-import java.util.Random;
-
 @Mod(modid = MatchesMod.MODID, version = MatchesMod.VERSION)
 public class MatchesMod {
     public static final String MODID = "matches";
-    public static final String VERSION = "Pre-Alpha-0.0.2";
+    public static final String VERSION = "Pre-Alpha-0.0.2-4";
 
     // The instance of your mod that Forge uses.
     @Mod.Instance(value = MatchesMod.MODID)
@@ -37,6 +32,10 @@ public class MatchesMod {
     public static Item enderSword;
 
     public static Item infinitySword;
+
+    public static Item ironToothpick;
+
+    public static Item dragonBow;
 
     public static Item sunSword;
 
@@ -52,9 +51,9 @@ public class MatchesMod {
 
     public static int MNOVA_RED = 0xFA051D;
 
-    //public static int HB_RED = 0xFA051D;
+    public static int HB_RED = 0xFA051D;
 
-    //public static int HB_BLACK = 0x000000;
+    public static int HB_BLACK = 0x000000;
 
 
 
@@ -70,6 +69,12 @@ public class MatchesMod {
         }
     };
 
+    public static CreativeTabs tabLegendaryWeapons = new CreativeTabs("LegendWeapons") {
+        public Item getTabIconItem() {
+            return enderSword;
+        }
+    };
+
     // Says where the client and server 'proxy' code is loaded.
     @SidedProxy(clientSide="psychicnova.matches.client.ClientProxy", serverSide="psychicnova.matches.CommonProxy")
     public static CommonProxy proxy;
@@ -80,21 +85,25 @@ public class MatchesMod {
         infinitySword = new InfinitySwordItem();
         sunSword = new SunSwordItem();
         needle = new NeedleItem();
+        ironToothpick = new IronToothpickItem();
         sunStone = new SunStoneBlock();
         waspHive = new WaspHiveBlock();
         matches = new MatchesItem();
+        dragonBow = new DragonBowItem();
         GameRegistry.registerItem(enderSword, enderSword.getUnlocalizedName());
         GameRegistry.registerItem(infinitySword, infinitySword.getUnlocalizedName());
         GameRegistry.registerItem(sunSword, sunSword.getUnlocalizedName());
         GameRegistry.registerItem(needle, needle.getUnlocalizedName());
         GameRegistry.registerItem(matches, matches.getUnlocalizedName());
+        GameRegistry.registerItem(ironToothpick, ironToothpick.getUnlocalizedName());
+        GameRegistry.registerItem(dragonBow, dragonBow.getUnlocalizedName());
         GameRegistry.registerBlock(sunStone, sunStone.getUnlocalizedName());
         GameRegistry.registerBlock(waspHive, waspHive.getUnlocalizedName());
         GameRegistry.registerTileEntity(WaspHiveTileEntity.class, "waspHive");
         GameRegistry.registerFuelHandler(new MatchesFuelHandler());
         registerEntity(WaspEntity.class, "wasp", WASP_YELLOW, WASP_GREEN);
         registerEntity(MNovaEntity.class, "mnova", MNOVA_BLUE, MNOVA_RED);
-        //registerEntity(HeroBossEntity.class, "heroboss", HB_RED, HB_BLACK);
+        registerEntity(HeroBossEntity.class, "heroboss", HB_RED, HB_BLACK);
         proxy.registerRenderers();
         System.out.println("preInit on the Matches mod!");
     }
@@ -103,27 +112,38 @@ public class MatchesMod {
     public void load(FMLInitializationEvent event) {
         System.out.println("load on the Matches mod!");
         proxy.registerRenderers();
-        proxy.registerRenderers();
 
+        /**
+         * Imports items used in crafting recipes
+         */
         ItemStack dirtStack = new ItemStack(Blocks.dirt);
         ItemStack diamondsStack = new ItemStack(Items.diamond, 64);
+        ItemStack goldIngot = new ItemStack(Items.gold_ingot, 64);
         ItemStack blackWoolStack = new ItemStack(Blocks.wool, 42, 15);
         ItemStack gravelStack = new ItemStack(Blocks.gravel);
         ItemStack cobbleStack = new ItemStack(Blocks.cobblestone);
         ItemStack endStoneStack = new ItemStack(Blocks.end_stone);
         ItemStack blazeRodStack = new ItemStack(Items.blaze_rod, 2);
         ItemStack boneStack = new ItemStack(Items.bone, 4);
+        ItemStack IronIngot = new ItemStack(Items.iron_ingot, 9);
         ItemStack enderPearlStack = new ItemStack(Items.ender_pearl, 1);
         ItemStack eyeOfEnderStack = new ItemStack(Items.ender_eye, 1);
+        ItemStack glass = new ItemStack(Blocks.glass, 9);
         ItemStack diamondBlockStack = new ItemStack(Blocks.diamond_block);
         ItemStack glowStoneStack = new ItemStack(Blocks.glowstone);
         ItemStack sunStoneStack = new ItemStack(MatchesMod.sunStone);
-        ItemStack NeedleItem = new ItemStack(MatchesMod.needle);
+        ItemStack string = new ItemStack(Items.string, 64);
 
+        /*
+         *Creates the crafting recipes
+         */
         GameRegistry.addRecipe(new ItemStack(Blocks.cobblestone), "xy", "yx",
                 'x', dirtStack, 'y', gravelStack);
 
         GameRegistry.addRecipe(new ItemStack(Blocks.end_stone), "xyx", "ydy", "xyx",
+                'x', eyeOfEnderStack, 'y', enderPearlStack, 'd', diamondsStack);
+
+        GameRegistry.addRecipe(new ItemStack(Blocks.end_stone), "yxy", "xdx", "yxy",
                 'x', eyeOfEnderStack, 'y', enderPearlStack, 'd', diamondsStack);
 
         GameRegistry.addRecipe(new ItemStack(enderSword), " e ", "beb", " r ",
@@ -134,6 +154,15 @@ public class MatchesMod {
 
         GameRegistry.addRecipe(new ItemStack(sunSword), " s ", "bsb", " g ",
                 's', sunStoneStack, 'b', diamondsStack, 'g', blazeRodStack);
+
+        GameRegistry.addRecipe(new ItemStack(needle), "i  ", " g ", "  r",
+                'r', IronIngot, 'g', glass, 'i', ironToothpick);
+
+        GameRegistry.addRecipe(new ItemStack(ironToothpick), "  i", " i ", "i  ",
+                'i', IronIngot);
+
+        GameRegistry.addRecipe(new ItemStack(dragonBow), " gs", "dgs", " gs",
+               'g', goldIngot, 'd', diamondsStack, 's', string);
 
         /*GameRegistry.addSmelting(Blocks.stone.blockID, new ItemStack(
                 Blocks.stoneBrick), 0.1f);
@@ -152,6 +181,9 @@ public class MatchesMod {
         System.out.println("Welcome to the Matches mod!");
     }
 
+    /*
+    Creates the way to choose mob's spawn egg colors and its unlocalized name
+     */
     public static void registerEntity(Class entityClass, String name, int primaryColor, int secondaryColor) {
         int entityID = EntityRegistry.findGlobalUniqueEntityId();
         EntityRegistry.registerGlobalEntityID(entityClass, name, entityID);

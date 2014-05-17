@@ -9,10 +9,14 @@ public class SunSwordItem extends ItemSword {
     public SunSwordItem() {
         super(ToolMaterial.EMERALD);
         setMaxStackSize(1);
-        setCreativeTab(CreativeTabs.tabCombat);
+        setCreativeTab(MatchesMod.tabLegendaryWeapons);
         setUnlocalizedName("sunSword");
         setTextureName("matches:sunSword");
+        setMaxDamage(687);
     }
+    /*
+    Makes it fully 3D
+    */
     @Override
     @SideOnly(Side.CLIENT)
     public boolean isFull3D()
