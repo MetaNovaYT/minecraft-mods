@@ -4,7 +4,7 @@ import net.minecraft.client.renderer.entity.*;
 import net.minecraft.entity.Entity;
 import net.minecraft.util.ResourceLocation;
 
-public class RenderHeroBoss{}/* extends RenderLiving {
+public class RenderHeroBoss extends RenderLiving {
     private static final ResourceLocation textureLocation
             = new ResourceLocation(MatchesMod.MODID + ":" + "textures/models/HeroBoss.png");
 
@@ -16,4 +16,4 @@ public class RenderHeroBoss{}/* extends RenderLiving {
     protected ResourceLocation getEntityTexture(Entity HeroBoss) {
         return textureLocation;
     }
-}*/
+}

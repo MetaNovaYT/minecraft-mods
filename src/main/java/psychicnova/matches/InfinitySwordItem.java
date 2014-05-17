@@ -8,10 +8,14 @@ public class InfinitySwordItem extends ItemSword {
     public InfinitySwordItem() {
         super(ToolMaterial.EMERALD);
         setMaxStackSize(1);
-        setCreativeTab(CreativeTabs.tabCombat);
+        setCreativeTab(MatchesMod.tabLegendaryWeapons);
         setUnlocalizedName("infinitySword");
         setTextureName("matches:infinitySword");
+        setMaxDamage(1098);
     }
+    /*
+    Makes it fully 3D
+     */
     @Override
     @SideOnly(Side.CLIENT)
     public boolean isFull3D()

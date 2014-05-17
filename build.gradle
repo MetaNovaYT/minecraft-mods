@@ -17,9 +17,13 @@ buildscript {
 
 apply plugin: 'forge'
 
-version = "Pre-Alpha-0.0.2"
+version = "Pre-Alpha-0.0.2-4UNSTABLE"
 group= "psychicnova.matches" // http://maven.apache.org/guides/mini/guide-naming-conventions.html
-archivesBaseName = "matches"
+archivesBaseName = "Matches"
+
+// version = "Pre-Alpha-0.0.1"
+// group= "psychicnova.colorConverterAPI" // http://maven.apache.org/guides/mini/guide-naming-conventions.html
+// archivesBaseName = "ColorConverterAPI"
 
 minecraft {
     version = "1.7.2-10.12.0.1024"
